@@ -183,7 +183,7 @@ pre code {
 <ul>
 <li><a href="#findings">Findings</a>
 <ul>
-<li><a href="#iat">IAT</a></li>
+<li><a href="#iat-scores">IAT Scores</a></li>
 <li><a href="#additional-iat-results">Additional IAT results</a></li>
 </ul></li>
 </ul>
@@ -191,13 +191,11 @@ pre code {
 
 <div id="findings" class="section level2">
 <h2>Findings</h2>
-<p>To estimate the impact of monitoring on several outcomes, we focus on intent to treat (ITT) estimates since some classes randomized to receive monitoring did not do so due to imperfect implementation (teacher resignation or no monitoring my AMAG I). Each column reports the results of a regression of the form:</p>
-<p><span class="math display">\[y_{icr} = \alpha + \beta \times Monitor_{icr} + \lambda_c + \varepsilon_{icr}\]</span></p>
-<p>Where <span class="math inline">\(y_{icr}\)</span> is an outcome for student <span class="math inline">\(i\)</span> in class <span class="math inline">\(c\)</span> during round <span class="math inline">\(r\)</span>, <span class="math inline">\(Monitor_{icr}\)</span> is an indicator for receiving monitoring in class <span class="math inline">\(c\)</span> during round <span class="math inline">\(r\)</span>. <span class="math inline">\(\lambda_c\)</span> are class fixed affects. Standard errors are adjusted for clustering at the class level, except for percentage monitoring and pure treatment, where they are clustered at the student level.</p>
-<div id="iat" class="section level3">
-<h3>IAT</h3>
-<p>Table xx shows intent to treat estimates of the effect of the monitoring intervention on IAT scores. Columns 1-9 report results for each round. Column 10 report results for the pure treatment and Column 11 report results for percentage monitoring. Columns 1-11 shows that students in the monitored groups had higher IAT scores, meaning fewer gender stereotype attitudes. However, we also found that the monitoring intervention increased the likelihood of the student skipping the IAT score section, suggesting the presence of selection bias in our estimates. To correct? for selection bias, we carried out Lee (2009) treatment effect bounds estimates, finding that lower bounds do not include zero for most of the estimates (Appendix X)</p>
-<p><br></p>
+<p>To estimate the impact of monitoring on several outcomes, we focus on intent to treat (ITT) estimates since some classes randomized to receive monitoring did not do so due to imperfect implementation (mainly by tow reasons: (1) teacher resignation from the course or (2) no monitoring by AMAG personnel). Each column reports the results of a regression of the form:</p>
+<p><span class="math display">\[y_{icr} = \alpha + \beta \times Monitor_{icr} + \lambda_c + \varepsilon_{icr}\]</span> Where <span class="math inline">\(y_{icr}\)</span> is an outcome for student <span class="math inline">\(i\)</span> in class <span class="math inline">\(c\)</span> during round <span class="math inline">\(r\)</span>, <span class="math inline">\(Monitor_{icr}\)</span> is an indicator for receiving monitoring in class <span class="math inline">\(c\)</span> during round <span class="math inline">\(r\)</span>. <span class="math inline">\(\lambda_c\)</span> are class fixed affects. Standard errors are adjusted for clustering at the class level, except for percentage monitoring and pure treatment, where they are clustered at the student level.</p>
+<div id="iat-scores" class="section level3">
+<h3>IAT Scores</h3>
+<p>Table xx shows intent to treat estimates of the effect of the monitoring intervention on IAT scores. Columns 1-9 report results for each round. Column 10 report results for the pure treatment and Column 11 report results for percentage monitoring treatment. Columns 1-11 shows that students in the monitored groups had higher IAT scores, meaning fewer gender stereotype attitudes. However, we also found that the monitoring intervention increased the likelihood of the student skipping the IAT score section, suggesting the presence of selection bias in our estimates. To correct? for selection bias, we carried out Lee (2009) treatment effect bounds estimates, finding that lower bounds for most of our coefficients do not include zero (see Appendix X). <br></p>
 <pre class="r"><code>note &lt;-  &quot;Estimates are OLS with course fixed effects. Standard errors are clustered at the classs level, except for percentage monitoring and pure treatment, where they are clustered at the student level.&quot;
 
 
@@ -607,7 +605,9 @@ Estimates are OLS with course fixed effects. Standard errors are clustered at th
 </tr>
 </table>
 <p><br></p>
-<p>Additionaly, we carried out a subgroup analysis to identify whether the effect is due to the women’s monitoring or men’s monitoring. We ran a regression of the form <span class="math inline">\(y_{icr} = \alpha + \beta_1 \times FemaleMonitor_{icr} + \beta_2 \times MaleMonitor_{icr} + \lambda_c + \varepsilon_{icr}\)</span>. Where <span class="math inline">\(FemaleMonitor_{icr}\)</span> and <span class="math inline">\(MaleMonitor_{icr}\)</span> are indicators for female and male monitors respectively. Columns 10 and 11 of table xx shows statistically significant and are higher IAT scores for the Female Monitor interventions compared to the male monitor interventions. Suggesting that the effect is due to the “presence” of a female monitor.</p>
+<p>Additionaly, we carried out a subgroup analysis to identify whether the effect is due to the women’s monitoring or men’s monitoring. We ran a regression of the form</p>
+<p><span class="math display">\[y_{icr} = \alpha + \beta_1 \times FemaleMonitor_{icr} + \beta_2 \times MaleMonitor_{icr} + \lambda_c + \varepsilon_{icr}\]</span></p>
+<p>Where <span class="math inline">\(FemaleMonitor_{icr}\)</span> and <span class="math inline">\(MaleMonitor_{icr}\)</span> are indicators for female and male monitors respectively. Columns 10 and 11 of table xx shows statistically significant and are higher IAT scores for the Female Monitor interventions compared to the male monitor interventions. Suggesting that the effect is due to the “presence” of a female monitor.</p>
 <pre class="r"><code>  formula &lt;- as.formula(paste0(&#39;iat_score ~ treatment_female + treatment_male | idcurso | 0 | aula&#39;))
   
   out_list &lt;- list()
@@ -1006,9 +1006,9 @@ Estimates are OLS with course fixed effects. Standard errors are clustered at th
 </tr>
 </table>
 <p><br></p>
-<p>Including <span class="math inline">\(FemaleTeacher\)</span> as a covariate and an interaction term between Female monitor and Female Teacher (<span class="math inline">\(FemaleMonitor \times FemaleTeacher\)</span>) in the regression</p>
+<p>On the other hand, including <span class="math inline">\(FemaleTeacher\)</span> as a covariate and an interaction term between Female monitor and Female Teacher (<span class="math inline">\(FemaleMonitor \times FemaleTeacher\)</span>) in the regression:</p>
 <p><span class="math display">\[y_{icr} = \alpha + \beta_1 \times FemaleMonitor_{icr} + \beta_2 \times MaleMonitor_{icr} + \beta_3 \times FemaleTeacher_{icr} + \beta_4 \times FemaleMonitor_{icr} \times FemaleTeacher_{icr} + \lambda_c + \varepsilon_{icr}\]</span></p>
-<p>also shows a statistically significant effect of female’s monitoring for male <span class="math inline">\(\beta_1\)</span> and female teachers <span class="math inline">\(\beta_1 + \beta_4\)</span> on IAT student’s outcomes. We include the <span class="math inline">\(\beta_1 + \beta_4\)</span> coefficient as well as the associated p-value in the following table:</p>
+<p>Also shows a statistically significant effect of female’s monitoring for male <span class="math inline">\(\beta_1\)</span> and female teachers <span class="math inline">\(\beta_1 + \beta_4\)</span> on IAT student’s outcomes. We include the <span class="math inline">\(\beta_1 + \beta_4\)</span> coefficient as well as the associated p-value in the following table:</p>
 <p><br></p>
 <pre class="r"><code>lincom &lt;- function(model, specification, level = 0.95, eform=FALSE, ...) {
     stopifnot(requireNamespace(&quot;car&quot;))
