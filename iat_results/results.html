@@ -612,6 +612,7 @@ format_perc &lt;-
 
   formula &lt;- as.formula(paste0(&#39;iat_score ~ treatment_female*teacher_female + treatment_male + I(treatment_male*teacher_female) | idcurso | 0 | aula&#39;))
   
+  out_t_test &lt;- c() # Store test between coefficients
   out_list &lt;- list()
   
   lincom_ft_coef &lt;- c()
@@ -674,6 +675,11 @@ format_perc &lt;-
   
   lincom_mt_coef[[&#39;Pure Treatment&#39;]] &lt;- mt_coef
   lincom_mt_pvalue[[&#39;Pure Treatment&#39;]] &lt;- mt_pvalue
+  
+  # Linear hypothesis
+  t_test &lt;- linearHypothesis(model_pure, c(&quot;treatment_female + treatment_female:teacher_female = treatment_male + I(treatment_male * teacher_female)&quot;))
+  out_t_test[&quot;Pure Treatment&quot;] &lt;- round(t_test[2,4],3)
+  
     
   # Percentage
   model_perc &lt;- felm(formula, data = monit_perc)
@@ -696,6 +702,10 @@ format_perc &lt;-
     
   lincom_mt_coef[[&#39;Perc. courses monitored&#39;]] &lt;- mt_coef
   lincom_mt_pvalue[[&#39;Perc. courses monitored&#39;]] &lt;- mt_pvalue
+  
+  # Linear hypothesis
+  t_test &lt;- linearHypothesis(model_perc, c(&quot;treatment_female + treatment_female:teacher_female = treatment_male + I(treatment_male * teacher_female)&quot;))
+  out_t_test[&quot;Perc. courses monitored&quot;] &lt;- round(t_test[2,4],3)
     
   out_name &lt;- &quot;IAT Score&quot;
   
@@ -750,7 +760,8 @@ format_perc &lt;-
             add.lines = list(
               c(&quot;Female monitor&#39;s effect for female teachers&quot;, value_ft), 
               #c(&quot;Associated p-value&quot;, lincom_ft_pvalue),
-              c(&quot;Male monitor&#39;s effect for female teachers&quot;, value_mt)))</code></pre>
+              c(&quot;Male monitor&#39;s effect for female teachers&quot;, value_mt),
+              c(&quot;p-value T-test FM-FT | MM-FT&quot;, out_t_test)))</code></pre>
 <table style="text-align:center">
 <tr>
 <td colspan="3" style="border-bottom: 1px solid black">
@@ -973,6 +984,17 @@ Male monitor’s effect for female teachers
 </tr>
 <tr>
 <td style="text-align:left">
+p-value T-test FM-FT | MM-FT
+</td>
+<td>
+0.311
+</td>
+<td>
+0.362
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
 Observations
 </td>
 <td>
@@ -1015,6 +1037,7 @@ Estimates are OLS with course fixed effects. Standard errors are clustered at th
 <p><br></p>
 <pre class="r"><code>  formula &lt;- as.formula(paste0(&#39;iat_score ~ treatment_female*participant_female + treatment_male + I(treatment_male*participant_female) | idcurso | 0 | aula&#39;))
   
+  out_t_test &lt;- c() # Store test between coefficients
   out_list &lt;- list()
   
   lincom_ft_coef &lt;- c()
@@ -1077,6 +1100,11 @@ Estimates are OLS with course fixed effects. Standard errors are clustered at th
   
   lincom_mt_coef[[&#39;Pure Treatment&#39;]] &lt;- mt_coef
   lincom_mt_pvalue[[&#39;Pure Treatment&#39;]] &lt;- mt_pvalue
+  
+  # Linear hypothesis
+  t_test &lt;- linearHypothesis(model_pure, c(&quot;treatment_female + treatment_female:participant_female = treatment_male + I(treatment_male * participant_female)&quot;))
+  out_t_test[&quot;Pure Treatment&quot;] &lt;- round(t_test[2,4],3)
+  
     
   # Percentage
   model_perc &lt;- felm(formula, data = monit_perc)
@@ -1099,6 +1127,10 @@ Estimates are OLS with course fixed effects. Standard errors are clustered at th
     
   lincom_mt_coef[[&#39;Perc. courses monitored&#39;]] &lt;- mt_coef
   lincom_mt_pvalue[[&#39;Perc. courses monitored&#39;]] &lt;- mt_pvalue
+  
+  # Linear hypothesis
+  t_test &lt;- linearHypothesis(model_perc, c(&quot;treatment_female + treatment_female:participant_female = treatment_male + I(treatment_male * participant_female)&quot;))
+  out_t_test[&quot;Perc. courses monitored&quot;] &lt;- round(t_test[2,4],3)
     
   out_name &lt;- &quot;IAT Score&quot;
   
@@ -1153,7 +1185,8 @@ Estimates are OLS with course fixed effects. Standard errors are clustered at th
             add.lines = list(
               c(&quot;Female monitor&#39;s effect for female participants&quot;, value_ft), 
               #c(&quot;Associated p-value&quot;, lincom_ft_pvalue),
-              c(&quot;Male monitor&#39;s effect for female participants&quot;, value_mt)))</code></pre>
+              c(&quot;Male monitor&#39;s effect for female participants&quot;, value_mt),
+              c(&quot;p-value T-test FM-FP | MM-FP&quot;, out_t_test)))</code></pre>
 <table style="text-align:center">
 <tr>
 <td colspan="3" style="border-bottom: 1px solid black">
@@ -1372,6 +1405,17 @@ Male monitor’s effect for female participants
 </td>
 <td>
 0.047
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+p-value T-test FM-FP | MM-FP
+</td>
+<td>
+0.952
+</td>
+<td>
+0.397
 </td>
 </tr>
 <tr>
