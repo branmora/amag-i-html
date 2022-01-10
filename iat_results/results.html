@@ -196,18 +196,18 @@ pre code {
 <div id="iat-scores" class="section level3">
 <h3>IAT Scores</h3>
 <p>Table xx shows intent to treat estimates of the effect of the monitoring intervention on IAT scores. Column 1 report results for the pure treatment and Column 2 report results for percentage monitoring treatment. Both columns shows that students in the monitored groups had higher IAT scores, meaning fewer gender stereotype attitudes. However, testing for the equality of both coefficients is not significant. We also found that the monitoring intervention increased the likelihood of the student skipping the IAT score section, suggesting the presence of selection bias in our estimates. To correct? for selection bias, we carried out Lee (2009) treatment effect bounds estimates, finding that lower bounds for most of our coefficients do not include zero (see Appendix X). <br></p>
-<pre class="r"><code>note &lt;-  &quot;Estimates are OLS with course fixed effects. Standard errors are clustered at the classs level, except for percentage monitoring and pure treatment, where they are clustered at the student level.&quot;
+<pre class="r"><code>note &lt;-  &quot;Estimates are OLS with course fixed effects. Standard errors are clustered at the student level.&quot;
 
 
   formula &lt;- as.formula(paste0(&#39;iat_score ~ monitoreo | idcurso | 0 | aula&#39;))
   
   out_list &lt;- list()
   
-  for (r in 1:9) {
-    model &lt;- felm(formula, data = data %&gt;% filter(round == r))
-    
-    out_list[[sprintf(&#39;Round %i&#39;, r)]] &lt;- model
-  }
+  # for (r in 1:9) {
+  #   model &lt;- felm(formula, data = data %&gt;% filter(round == r))
+  #   
+  #   out_list[[sprintf(&#39;Round %i&#39;, r)]] &lt;- model
+  # }
   
   formula &lt;- as.formula(paste0(&#39;iat_score ~ monitoreo | 0 | 0 | dni&#39;))
   
@@ -226,58 +226,31 @@ pre code {
             type = &#39;html&#39;)</code></pre>
 <table style="text-align:center">
 <tr>
-<td colspan="12" style="border-bottom: 1px solid black">
+<td colspan="3" style="border-bottom: 1px solid black">
 </td>
 </tr>
 <tr>
 <td style="text-align:left">
 </td>
-<td colspan="11">
+<td colspan="2">
 <em>Dependent variable:</em>
 </td>
 </tr>
 <tr>
 <td>
 </td>
-<td colspan="11" style="border-bottom: 1px solid black">
+<td colspan="2" style="border-bottom: 1px solid black">
 </td>
 </tr>
 <tr>
 <td style="text-align:left">
 </td>
-<td colspan="11">
+<td colspan="2">
 IAT Score
 </td>
 </tr>
 <tr>
 <td style="text-align:left">
-</td>
-<td>
-Round 1
-</td>
-<td>
-Round 2
-</td>
-<td>
-Round 3
-</td>
-<td>
-Round 4
-</td>
-<td>
-Round 5
-</td>
-<td>
-Round 6
-</td>
-<td>
-Round 7
-</td>
-<td>
-Round 8
-</td>
-<td>
-Round 9
 </td>
 <td>
 Pure Treatment
@@ -295,68 +268,14 @@ Perc. courses monitored
 <td>
 (2)
 </td>
-<td>
-(3)
-</td>
-<td>
-(4)
-</td>
-<td>
-(5)
-</td>
-<td>
-(6)
-</td>
-<td>
-(7)
-</td>
-<td>
-(8)
-</td>
-<td>
-(9)
-</td>
-<td>
-(10)
-</td>
-<td>
-(11)
-</td>
 </tr>
 <tr>
-<td colspan="12" style="border-bottom: 1px solid black">
+<td colspan="3" style="border-bottom: 1px solid black">
 </td>
 </tr>
 <tr>
 <td style="text-align:left">
 Monitoring
-</td>
-<td>
-0.070<sup>**</sup>
-</td>
-<td>
-0.071<sup>**</sup>
-</td>
-<td>
-0.072<sup>**</sup>
-</td>
-<td>
-0.073<sup>**</sup>
-</td>
-<td>
-0.074<sup>**</sup>
-</td>
-<td>
-0.081<sup>***</sup>
-</td>
-<td>
-0.090<sup>***</sup>
-</td>
-<td>
-0.095<sup>***</sup>
-</td>
-<td>
-0.021
 </td>
 <td>
 0.090<sup>**</sup>
@@ -367,33 +286,6 @@ Monitoring
 </tr>
 <tr>
 <td style="text-align:left">
-</td>
-<td>
-(0.033)
-</td>
-<td>
-(0.032)
-</td>
-<td>
-(0.032)
-</td>
-<td>
-(0.033)
-</td>
-<td>
-(0.034)
-</td>
-<td>
-(0.031)
-</td>
-<td>
-(0.031)
-</td>
-<td>
-(0.035)
-</td>
-<td>
-(0.029)
 </td>
 <td>
 (0.043)
@@ -409,59 +301,14 @@ Monitoring
 </td>
 <td>
 </td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
 </tr>
 <tr>
-<td colspan="12" style="border-bottom: 1px solid black">
+<td colspan="3" style="border-bottom: 1px solid black">
 </td>
 </tr>
 <tr>
 <td style="text-align:left">
 Observations
-</td>
-<td>
-292
-</td>
-<td>
-292
-</td>
-<td>
-292
-</td>
-<td>
-291
-</td>
-<td>
-277
-</td>
-<td>
-278
-</td>
-<td>
-278
-</td>
-<td>
-274
-</td>
-<td>
-275
 </td>
 <td>
 1,754
@@ -475,33 +322,6 @@ Observations
 R<sup>2</sup>
 </td>
 <td>
-0.014
-</td>
-<td>
-0.014
-</td>
-<td>
-0.015
-</td>
-<td>
-0.015
-</td>
-<td>
-0.016
-</td>
-<td>
-0.018
-</td>
-<td>
-0.023
-</td>
-<td>
-0.026
-</td>
-<td>
-0.002
-</td>
-<td>
 0.022
 </td>
 <td>
@@ -511,33 +331,6 @@ R<sup>2</sup>
 <tr>
 <td style="text-align:left">
 Adjusted R<sup>2</sup>
-</td>
-<td>
-0.007
-</td>
-<td>
-0.008
-</td>
-<td>
-0.008
-</td>
-<td>
-0.008
-</td>
-<td>
-0.009
-</td>
-<td>
-0.008
-</td>
-<td>
-0.012
-</td>
-<td>
-0.016
-</td>
-<td>
--0.005
 </td>
 <td>
 0.021
@@ -551,33 +344,6 @@ Adjusted R<sup>2</sup>
 Residual Std. Error
 </td>
 <td>
-0.306 (df = 289)
-</td>
-<td>
-0.305 (df = 289)
-</td>
-<td>
-0.305 (df = 289)
-</td>
-<td>
-0.306 (df = 288)
-</td>
-<td>
-0.307 (df = 274)
-</td>
-<td>
-0.306 (df = 274)
-</td>
-<td>
-0.306 (df = 274)
-</td>
-<td>
-0.306 (df = 270)
-</td>
-<td>
-0.306 (df = 272)
-</td>
-<td>
 0.301 (df = 1752)
 </td>
 <td>
@@ -585,22 +351,22 @@ Residual Std. Error
 </td>
 </tr>
 <tr>
-<td colspan="12" style="border-bottom: 1px solid black">
+<td colspan="3" style="border-bottom: 1px solid black">
 </td>
 </tr>
 <tr>
 <td style="text-align:left">
 <em>Note:</em>
 </td>
-<td colspan="11" style="text-align:right">
+<td colspan="2" style="text-align:right">
 <sup><em></sup>p&lt;0.1; <sup><strong></sup>p&lt;0.05; <sup></strong></em></sup>p&lt;0.01
 </td>
 </tr>
 <tr>
 <td style="text-align:left">
 </td>
-<td colspan="11" style="text-align:right">
-Estimates are OLS with course fixed effects. Standard errors are clustered at the classs level, except for percentage monitoring and pure treatment, where they are clustered at the student level.
+<td colspan="2" style="text-align:right">
+Estimates are OLS with course fixed effects. Standard errors are clustered at the student level.
 </td>
 </tr>
 </table>
@@ -608,7 +374,7 @@ Estimates are OLS with course fixed effects. Standard errors are clustered at th
 <p>Additionaly, we carried out a subgroup analysis to identify whether the effect is due to the women’s monitoring or men’s monitoring. We ran a regression of the form</p>
 <p><span class="math display">\[y_{icr} = \alpha + \beta_1 FM_{icr} + \beta_2 MM_{icr} + \lambda_c + \varepsilon_{icr}\]</span></p>
 <p>Where <span class="math inline">\(FM_{icr}\)</span> and <span class="math inline">\(MM_{icr}\)</span> are indicators for female and male monitors respectively. Columns 10 and 11 of table xx shows statistically significant and are higher IAT scores for the Female Monitor interventions compared to the male monitor interventions. Suggesting that the effect is due to the “presence” of a female monitor.</p>
-<pre class="r"><code>note_2 &lt;-  &quot;Estimates are OLS with course fixed effects. Standard errors are clustered at the classs level, except for percentage monitoring and pure treatment, where they are clustered at the student level. &#39;P-value T-test B1 = B2&#39; tests whether coefficients on female and male monitor are significantly different from each other.&quot;
+<pre class="r"><code>note_2 &lt;-  &quot;Estimates are OLS with course fixed effects. Standard errors are clustered at the student level. &#39;P-value T-test B1 = B2&#39; tests whether coefficients on female and male monitor are significantly different from each other.&quot;
 
 
   formula &lt;- as.formula(paste0(&#39;iat_score ~ treatment_female + treatment_male | idcurso | 0 | aula&#39;))
@@ -809,7 +575,7 @@ Observations
 <td style="text-align:left">
 </td>
 <td colspan="2" style="text-align:right">
-Estimates are OLS with course fixed effects. Standard errors are clustered at the classs level, except for percentage monitoring and pure treatment, where they are clustered at the student level. ‘P-value T-test B1 = B2’ tests whether coefficients on female and male monitor are significantly different from each other.
+Estimates are OLS with course fixed effects. Standard errors are clustered at the student level. ‘P-value T-test B1 = B2’ tests whether coefficients on female and male monitor are significantly different from each other.
 </td>
 </tr>
 </table>
@@ -1232,7 +998,7 @@ Observations
 <td style="text-align:left">
 </td>
 <td colspan="2" style="text-align:right">
-Estimates are OLS with course fixed effects. Standard errors are clustered at the classs level, except for percentage monitoring and pure treatment, where they are clustered at the student level.
+Estimates are OLS with course fixed effects. Standard errors are clustered at the student level.
 </td>
 </tr>
 </table>
@@ -1635,7 +1401,7 @@ Observations
 <td style="text-align:left">
 </td>
 <td colspan="2" style="text-align:right">
-Estimates are OLS with course fixed effects. Standard errors are clustered at the classs level, except for percentage monitoring and pure treatment, where they are clustered at the student level.
+Estimates are OLS with course fixed effects. Standard errors are clustered at the student level.
 </td>
 </tr>
 </table>
@@ -1994,7 +1760,7 @@ Observations
 <td style="text-align:left">
 </td>
 <td colspan="2" style="text-align:right">
-Estimates are OLS with course fixed effects. Standard errors are clustered at the classs level, except for percentage monitoring and pure treatment, where they are clustered at the student level.
+Estimates are OLS with course fixed effects. Standard errors are clustered at the student level.
 </td>
 </tr>
 </table>
